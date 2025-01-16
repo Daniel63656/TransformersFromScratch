@@ -77,42 +77,16 @@ class SinusoidalEmbedding(nn.Module):
         self.register_buffer('div', torch.pow(theta, 2*torch.arange(0, dim//2) / dim), persistent=False)
 
     def forward(self, pos):
-        """ pos: input positions (B, N) -> (B, N, d_m)
-        """
+        '''
+        pos: input positions [B, N]
+        returns: embedding [B, N, d_m]
+        '''
         B, N = pos.shape
         pos = pos.unsqueeze(2)
         out = torch.empty(B, N, self.dim, device=pos.device)
         out[:, :, 0::2] = torch.sin(pos/self.div)
         out[:, :, 1::2] = torch.cos(pos/self.div)
         return out
-    
-
-# TODO remove old sinusoidal embedding and test my imp
-class SinusoidalEmbedding(nn.Module):
-    def __init__(self, d_m, numberOfTokenIDs, base, device):
-        super(SinusoidalEmbedding, self).__init__()
-        self.d_m = d_m
-        self.base = base
-        self.device = device
-        self.embedding = nn.Embedding(numberOfTokenIDs, d_m)
-
-    # Position encoding. For more info see
-    # https://machinelearningmastery.com/a-gentle-introduction-to-positional-encoding-in-transformer-models-part-1/
-    def encodePosition(self, sequenceLen, d_m, n):
-        # Initialize empty matrix
-        mat = torch.empty((sequenceLen, d_m))
-        # Iterate over embedding dimension (column)
-        for i in range(int(d_m/2)):
-            denoms = torch.arange(sequenceLen)/(n**(2*i/d_m))
-            # Set two colums
-            mat[:, 2*i]   = torch.sin(denoms)
-            mat[:, 2*i+1] = torch.cos(denoms)
-        return mat.to(self.device)
-    
-    def forward(self, x):
-        x = self.embedding(x)
-        x += self.encodePosition(x.shape[1], self.d_m, self.base)
-        return x
     
 
 class EncoderBlock(nn.Module):

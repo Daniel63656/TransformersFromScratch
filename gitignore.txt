@@ -1,0 +1,57 @@
+# Byte-compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.suo
+*.sdf
+*.db
+*.sqlite3
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+*.py[co]
+
+# Virtual Environment
+venv/
+.env/
+env/
+.venv/
+.env.bak/
+
+# VSCode settings
+.vscode/
+.history/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Pytest cache
+.pytest_cache/
+
+# Mypy
+.mypy_cache/
+
+# Coverage reports
+.coverage
+.coverage.*
+*.cover
+*.log
+
+# Editor directories and files
+*.swp
+*.swo
+
+# Local settings
+local_settings.py
+
+# Miscellaneous
+*.DS_Store
+*.sass-cache
+*.project
+*.classpath
+*.idea/
